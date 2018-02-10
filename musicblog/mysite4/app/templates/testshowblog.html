@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/button.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Easyblog</title>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="col-xs-3">
+                <div class="nav-bar header">
+                    <a class="navbar-brand" href="#">
+                        <img alt="Brand" src="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-9">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index/" style="background-color:#f1f1f1;"><font color="#000">主页</font></a></li>
+                    <li><a href="/index/add_essay/"><font color="#000">分享</font></a></li>
+                    <li><a href="http://weibo.com/u/2238952445?refer_flag=1001030102_" style="background-color:#f1f1f1;"><font color="#000">关于</font></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle-o pull-center fa-lg"></i>
+                            <!--{% if request.user.is_authenticated %}-->
+                            <!--你好，{{ request.user.username }}-->
+                            <!--{% else %}-->
+                            <font color="#000">用户</font>
+                            <!--{% endif %}-->
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!--{% if request.user.is_authenticated %}-->
+                            <li><a href="{% url 'logout' %}">注销</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">else</a></li>
+                            <!--{% else %}-->
+                            <li><a href="javascript:;" class="theme-login">登录</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{% url 'register' %}">注册</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">else</a></li>
+                            <!--{% endif %}-->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="col-xs-3">
+            <!-- code here -->
+            <h3 style="margin-top:5px;margin-bottom:10px;">评论</h3>
+            <hr style="margin-top:5px;margin-bottom:10px;">
+            <form class="form" method="POST" action="{% url 'submitcomment' blog_content.id %}">
+                <div class="form-group">
+                    <label>分享你的心情</label>
+                    <textarea name="commentcontent" class="form-control" rows="5" style="resize: none;"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="button button-primary button-tiny" type="submit" style="float:right;font-size:14px;">评论</button>
+                </div>
+            </form>
+            <br>
+            <!--{% for comment in commentlist %}-->
+            <h5>{{comment.user}}:</h5>
+            <h6>{{comment.commentcontent}}<br><small>{{comment.commentdate}}</small></h6>
+            <hr>
+            <!--{% endfor %}-->
+        </div>
+        <div class="col-xs-9">
+            <h3 style="margin-bottom:10px;margin-top:5px;">wake</h3>
+            <div style="margin-left:0px;margin-bottom:0px;">
+                <span class="label label-warning">j</span>
+                <span class="label label-default">j</span>
+                <span class="label label-info">j</span>
+                <span class="label label-primary">j</span>
+                <span class="label label-success">j</span>
+                <span class="label label-danger">j</span>
+            </div>
+            <p style="margin-top:5px;margin-bottom:0px;">
+                <span class="fa fa-user fa-fw"></span>
+                <small>分享者: liwenchi</small>
+            </p>
+            <p style="margin-top:5px;margin-bottom:0px;">
+                <span class="fa fa-clock-o fa-fw"></span>
+                <small>创建日期: {{ blog_content.creatdate|date:"Y年n月d日 - H:i" }}</small>
+            </p>
+            <hr style="margin-top:5px;margin-bottom:10px;">
+            <p>{{ blog_content.link }}</p>
+            <h5 style="margin-left: 0px">
+                aaaaaaaaaaaaaaaaaaaaa
+            </h5>
+        </div>
+    </div>
+</body>
+</html>

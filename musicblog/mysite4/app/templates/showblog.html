@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content2 %}
+<script>
+    function pleaselogin(){
+        alert("请先登个录呗  T^T");
+    }
+</script>
+    <button style="display:none;" id="content_id" value="{{ blog_content.id }}"></button>
+    <div id="insertcomment">
+        <h3>评论</h3><hr>
+        <form class="form" method="POST" action="{% url 'submitcomment' blog_content.id %}" onsubmit="return checkcomment();">
+            <div class="form-group">
+                <label>分享你的心情</label>
+                <textarea name="commentcontent" class="form-control" rows="5" style="resize: none;" id="commentarea"></textarea>
+            </div>
+            <div class="form-group">
+                {% if request.user.is_authenticated %}
+                <button class="button button-primary button-tiny" type="submit" style="float:right;font-size:14px;" id="subcomment">评论</button>
+                {% else %}
+                <div class="button button-primary button-tiny" style="float:right;font-size:14px;" onclick="pleaselogin()">评论</div>
+                {% endif %}
+            </div>
+        </form>
+        <br>
+        {% for comment in commentlist %}
+            <h5>{{comment.user}}:</h5>
+            <h6>{{comment.commentcontent}}<br><small>{{comment.commentdate}}</small></h6>
+            <hr>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block content %}
+    <style>
+        hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #d5d5d5;
+    }
+    </style>
+    <h3 style="margin-bottom:0px;margin-top:0px;margin-left:12px;width:auto;">{{ blog_content.title }}</h3>
+    <div>
+        {% if request.user.is_authenticated %}
+        {% ifequal islike 0 %}
+        <div class="praise" style="margin-bottom:0px;margin-top:0px;float:right;">
+            <p id="praise" style="margin-bottom:0px;margin-top:0px;float:right;"><img src="{% static 'img/yizan.png' %}" id="praise-img"/></p>
+            <span id="praise-txt" class="hover"style="margin-bottom:0px;margin-top:0px;">{{likenumber}}</span>
+            <span id="add-num" style="margin-bottom:0px;margin-top:0px;"><em class="add-animation hover">+1</em></span>
+        </div>
+        {% endifequal %}
+        {% ifequal islike 1 %}
+        <div id="fuck" class="praise" style="margin-bottom:0px;margin-top:0px;float:right;">
+            <div id="praise" style="margin-bottom:0px;margin-top:0px;float:right;"><img src="{% static 'img/zan.png' %}" id="praise-img" /></div>
+            <span id="praise-txt" style="margin-bottom:0px;margin-top:0px;">{{likenumber}}</span>
+            <span id="add-num" style="margin-bottom:0px;margin-top:0px;"><em>-1</em></span>
+        </div>
+        {% endifequal %}
+        {% else %}
+        <div class="praise" style="margin-bottom:0px;margin-top:0px;float:right;">
+            <div id="praise" style="margin-bottom:0px;margin-top:0px;float:right;"><img src="{% static 'img/zan.png' %}" id="praise-img" /></div>
+            <span id="praise-txt" style="margin-bottom:0px;margin-top:0px;">{{likenumber}}</span>
+            <span id="add-num" style="margin-bottom:0px;margin-top:0px;float:right;"><em>+1</em></span>
+        </div>
+        {% endif %}
+    </div>
+    <div style="margin-left:12px;margin-bottom:7px;">
+    {% for j in lablelist %}
+        {% ifequal j '电子' %}
+            <span class="label label-warning">{{j}}</span>
+        {% endifequal %}
+        {% ifequal j '欧美' %}
+            <span class="label label-default">{{j}}</span>
+        {% endifequal %}
+        {% ifequal j '纯音乐' %}
+            <span class="label label-info">{{j}}</span>
+        {% endifequal %}
+        {% ifequal j '中文' %}
+            <span class="label label-primary">{{j}}</span>
+        {% endifequal %}
+        {% ifequal j '古风' %}
+            <span class="label label-success">{{j}}</span>
+        {% endifequal %}
+        {% ifequal j '日韩' %}
+            <span class="label label-danger">{{j}}</span>
+        {% endifequal %}
+    {% endfor %}
+    </div>
+    <p style="margin-left:10px;">
+        <span class="fa fa-user fa-fw"></span>
+        <small>分享者: {{ blog_content.auther }}</small>
+    </p>
+    <div>{{co}}</div>
+    <p style="margin-left:10px;">
+        <span class="fa fa-clock-o fa-fw"></span>
+        <small>创建日期: {{ blog_content.creatdate|date:"Y年n月d日 - H:i" }}</small>
+    </p>
+    <hr>
+    <style>
+        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.8;
+            color: inherit;
+        }
+    </style>
+    {% autoescape off %}
+        <p>{{ blog_content.link }}</p>
+    {% endautoescape %}
+    <h5 style="margin-left: 10px">
+        {% autoescape off %}
+        {{ blog_content.content|linebreaksbr }}
+        {% endautoescape %}
+    </h5>
+{% endblock %}

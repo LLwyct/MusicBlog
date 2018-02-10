@@ -1,0 +1,17 @@
+/*body {
+    background: url('../img/111.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}*/
+
+.navbar-default{
+    background-color: rgba(248, 248, 248, 0.5);
+}
+
+.button-giant {
+    font-size: 28px;
+    height: 70px;
+    width: 400px;
+    line-height: 70px;
+    padding: 0 70px;
+}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+    {% block content %}
+   <form method="post"  class="login">
+      <p>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username"  data-error="请填写用户名" placeholder="用户名" autofocus required autocomplete="off">
+      </p>
+
+      <p>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" data-error="请填写密码" placeholder="密码">
+      </p>
+
+      <p class="login-submit"  >
+        <button type="submit" class="login-button">Login</button>
+      </p>
+   </form>
+
+  <section class="about">
+      {{ state }}
+    <!--<p class="about-links">-->
+      <!--<a href="http://www.cssflow.com/snippets/dark-login-form" target="_parent">View Article</a>-->
+      <!--<a href="http://www.cssflow.com/snippets/dark-login-form.zip" target="_parent">Download</a>-->
+    <!--</p>-->
+    <!--<p class="about-author">-->
+      <!--&copy; 2012&ndash;2013 <a href="http://thibaut.me" target="_blank">Thibaut Courouble</a> - -->
+      <!--<a href="http://www.cssflow.com/mit-license" target="_blank">MIT License</a><br>-->
+      <!--Original PSD by <a href="http://365psd.com/day/2-234/" target="_blank">Rich McNabb</a>-->
+  </section>
+{% endblock %}

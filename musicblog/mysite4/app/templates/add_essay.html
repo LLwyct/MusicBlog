@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<script>
+  function checkshare(){
+            var link = document.getElementById("linkk").value;
+            var title = document.getElementById("titlee").value;
+            if(link == "" ){
+                alert("请按照标准格式请输入音乐链接 ￣へ￣");
+                return false;
+            }
+            if(title == "" ){
+                alert("请至少输入标题 ヽ(￣▽￣)ﾉ");
+                return false;
+            }else{
+                alert("如果链接无法播放 请检查链接格式以及音乐源是否免费哦(～￣▽￣)～ ")
+                return true;
+            }
+        }
+</script>
+    <div style="margin-left:-50px;">
+        <div class="page-header col-sm-offset-2">
+          <h1>分享你的音乐<small> 分享你的心情</small></h1>
+        </div>
+        <form class="form-horizontal" method="POST" action="/index/sub_essay/" onsubmit="return checkshare();">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">音乐平台</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="platformtype">
+                    <option>网易云音乐</option>
+                    <option>抱歉 当前只支持网易云音乐</option>
+                    <!--<option>敬请期待</option>-->
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">音乐链接</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-chain samll" aria-hidden="true"></i></div>
+                        <input name="musiclink" type="text" class="form-control" placeholder="示例 http://music.163.com/#/m/song?id=27795934" id="linkk" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">标题</label>
+                <div class="col-sm-10">
+                    <input name="essay_title" type="text" class="form-control" placeholder="标题" id="titlee">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">音乐标签</label>
+                <div class="col-sm-10">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="中文" name="lable"> 中文
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="欧美" name="lable"> 欧美
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="电子" name="lable"> 电子
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox4" value="纯音乐" name="lable"> 纯音乐
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox5" value="日韩" name="lable"> 日韩
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox6" value="古风" name="lable"> 古风
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox7" value="VOCALOID" name="lable"> VOCALOID
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox8" value="其他" name="lable"> 其他
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">内容</label>
+                <div class="col-sm-10">
+                  <textarea name="essay_editor" class="form-control" rows="10" id="essay_editorr"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                   <button type="submit" class="button button-glow button-rounded button-highlight">share</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

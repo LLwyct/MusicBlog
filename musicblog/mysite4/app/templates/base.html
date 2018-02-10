@@ -1,0 +1,226 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="{% static 'css/demo.css' %}">
+<link rel="stylesheet" href="{% static "css/xf.css" %}" media="all">
+<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "css/master.css" %}">
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static "css/button.css" %}">
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script>
+        jQuery(document).ready(function($) {
+            $('.theme-login').click(function(){
+                $('.theme-popover-mask').fadeIn(100);
+                $('.theme-popover').slideDown(200);
+            })
+            $('.theme-poptit .close').click(function(){
+                $('.theme-popover-mask').fadeOut(100);
+                $('.theme-popover').slideUp(200);
+            })
+        })
+
+        function checkUser() {
+            var result = document.getElementById("uss").value;
+            var password = document.getElementById("pss").value;
+            if(result == "" ){
+                alert("用户名不能为空T^T");
+                return false;
+            }
+            if(password == "" ){
+                alert("密码不能为空T^T");
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        function logout(){
+            alert("注销成功 (￣▽￣)~");
+        }
+
+        function pleaselogin(){
+            alert("请先登个录呗  T^T");
+        }
+        {% if request.user.is_authenticated %}
+        $(function(){
+            $("#praise").click(function(){
+                var praise_img = $("#praise-img");
+                var text_box = $("#add-num");
+                var praise_txt = $("#praise-txt");
+                var num=parseInt(praise_txt.text());
+                var id = $("#content_id").val()
+                if(praise_img.attr("src") == ("{% static 'img/yizan.png' %}")){
+                    $(this).html("<img src='{% static 'img/zan.png' %}' id='praise-img' class='animation' />");
+                    praise_txt.removeClass("hover");
+                    text_box.show().html("<em class='add-animation'>-1</em>");
+                    $(".add-animation").removeClass("hover");
+                    num -=1;
+                    praise_txt.text(num)
+                    $.ajax({
+                        type:"POST",
+                        url:"{% url 'likeit-1' %}",
+                        data:{number:-1,content_id:id},
+                        dataType:"json",
+                        success: function(){
+                        }
+                    });
+                }else{
+                    $(this).html("<img src='{% static 'img/yizan.png' %}' id='praise-img' class='animation' />");
+                    praise_txt.addClass("hover");
+                    text_box.show().html("<em class='add-animation'>+1</em>");
+                    $(".add-animation").addClass("hover");
+                    num +=1;
+                    praise_txt.text(num)
+                    $.ajax({
+                        type:"POST",
+                        url:"{% url 'likeit+1' %}",
+                        data:{number:1,content_id:id},
+                        dataType:"json",
+                        success:function(){
+
+                        }
+                    });
+                }
+            });
+        })
+        {% else %}
+        $(function(){
+            $("#praise").click(function(){
+                pleaselogin();
+            });
+        })
+        {% endif %}
+
+        function checkcomment() {
+            var result = document.getElementById("commentarea").value;
+            if(result == "" ){
+                alert("评论不能为空T^T");
+                return false;
+            }
+        }
+    </script>
+    <style>
+         .label-selfset {
+              background-color: #d512ce;
+         }
+    </style>
+<title>Musicblog</title>
+</head>
+<body id="fuckbody">
+    <nav class="navbar navbar-default" style="margin-top:0;">
+    <div class="container">
+        <div class="col-xs-3">
+            <div class="navbar-header" style="margin-left:8px;">
+                <a class="navbar-brand" href="{% url 'index' %}"></a>
+            </div>
+        </div>
+        <div class="col-xs-9">
+            <ul class="nav navbar-nav">
+                <li><a href="/index/" style="background-color:#f1f1f1;"><font color="#000">主页</font></a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="/index/add_essay/"><font color="#000">分享</font></a></li>
+                {% else %}
+                <li><a><font color="#000" onclick="pleaselogin()">分享</font></a></li>
+                {% endif %}
+                <li><a href="http://weibo.com/u/2238952445?refer_flag=1001030102_" style="background-color:#f1f1f1;"><font color="#000">关于</font></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle-o pull-center fa-lg"></i>
+                    {% if request.user.is_authenticated %}
+                    你好，{{ request.user.username }}
+                    {% else %}
+                <font color="#000">用户</font>
+                    {% endif %}
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}" onclick="logout()">注销</a></li><!-- {% url 'logout' %} -->
+                    <li class="divider"></li>
+                    <li><a href="#">else</a></li>
+                    {% else %}
+                    <li><a href="javascript:;" class="theme-login">登录</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'register' %}">注册</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">else</a></li>
+                    {% endif %}
+                </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+    <div class="container">
+        <div class="col-xs-3">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'add_essay' %}" class="button button-glow button-border button-rounded button-primary button-large" style="width:90%;min-width: 150px;">Share!</a>
+            {% else %}
+            <a class="button button-glow button-border button-rounded button-primary button-large" style="width:90%;min-width: 150px;" onclick="pleaselogin();">Share!</a>
+            {% endif %}
+            <div>
+                <br>
+            </div>
+            <div class="list-group side-bar" style="width:90%;">
+                <!--style="min-width: 175px;"-->
+                {% if state == 1 %}
+                <a href="/index/" class="list-group-item active">热门分享</a>
+                <a href="/indexbynew/" class="list-group-item">最新分享</a>
+                {% endif %}
+                {% if state == 2 %}
+                <a href="/index/" class="list-group-item">热门分享</a>
+                <a href="/indexbynew/" class="list-group-item active">最新分享</a>
+                {% endif %}
+                <!--{% if state == 3 %}-->
+                <!--<a href="#" class="list-group-item">我赞过的</a>-->
+                <!--<a href="/index/" class="list-group-item">热门分享</a>-->
+                <!--<a href="/indexbynew/" class="list-group-item">最新分享</a>-->
+                <!--<a href="#" class="list-group-item active">我赞过的</a>-->
+                <!--{% endif %}-->
+            </div>
+            {% block content2 %}
+            {% endblock %}
+        </div>
+        <div class="col-xs-9">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <!--悬浮效果-->
+    <div class="theme-popover">
+        <div class="theme-poptit text-center">
+            <a href="javascript:;" title="关闭" class="close text-center"><font color="black">×</font></a>
+            <h3><font face="YouYuan" size="8">登录</font></h3>
+        </div>
+        <div class="theme-popbod dform">
+            <form method="POST" style="float:up;" class="margin-top: 0px" action="/login/" onsubmit="return checkUser();">
+                <div class="form-group ">
+                    <div class="input-group col-md-offset-1">
+                        <div class="input-group-addon">
+                            <i class="fa fa-user-o fa-fw" aria-hidden="true"></i>
+                        </div>
+                        <input type="text" name="username" placeholder="用户名" class="form-control" id="uss">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group col-md-offset-1">
+                        <div class="input-group-addon">
+                            <i class="fa fa-key fa-fw" aria-hidden="true"></i>
+                        </div>
+                        <input type="password" name="password" placeholder="密码" class="form-control" id="pss">
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary btexxx">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

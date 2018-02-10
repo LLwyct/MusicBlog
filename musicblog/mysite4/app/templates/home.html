@@ -1,0 +1,68 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/master.css" %}">
+    <link rel="stylesheet" href="{% static "css/button.css" %}">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static "css/button.css" %}">
+    <title>Easyblog</title>
+    <style>
+    body{
+        background-image: url(../static/img/111.jpg);
+        background-repeat: no-repeat;
+        background-position: 0px 0px;
+        background-size: cover;
+        };
+    </style>
+</head>
+<body>
+    <!--<nav class="navbar navbar-default">-->
+          <!--<div class="container">-->
+              <!--<div class="navbar-header">-->
+                <!--<a class="navbar-brand" href="{% url 'index' %}" alt="Logo"></a>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<ul class="nav navbar-nav">-->
+                  <!--<li><a href="#"><font color="#000">主页</font></a></li>-->
+                  <!--<li><a href="#"><font color="#000">分享</font></a></li>-->
+                  <!--<li><a href="#"><font color="#000">关于</font></a></li>-->
+                <!--</ul>-->
+                <!--<ul class="nav navbar-nav navbar-right">-->
+                  <!--<li class="dropdown">-->
+    		              <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle-o pull-center fa-lg"></i>-->
+                              <!--{% if request.user.is_authenticated %}-->
+                              <!--你好，{{ request.user.username }}-->
+                              <!--{% else %}-->
+                              <!--<font color="#000">用户</font>-->
+                              <!--{% endif %}-->
+                              <!--<span class="caret"></span></a>-->
+    		              <!--<ul class="dropdown-menu">-->
+                            <!--{% if request.user.is_authenticated %}-->
+                              <!--<li><a href="{% url 'logout' %}">注销</a></li><li class="divider"></li>-->
+                              <!--<li><a href="#">else</a></li>-->
+                            <!--{% else %}-->
+                			<!--<li><a href="{% url 'login' %}">登录</a></li><li class="divider"></li>-->
+                			<!--<li><a href="{% url 'register' %}">注册</a></li><li class="divider"></li>-->
+                			<!--<li><a href="#">else</a></li>-->
+                            <!--{% endif %}-->
+            		      <!--</ul>-->
+            	   <!--</li>-->
+                <!--</ul>-->
+              <!--</div>-->
+            <!--</div>-->
+        <!--</nav>-->
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4">
+        <br><br><br><br><br><br><br><br><br><br><br>
+        <a href="{% url 'index' %}" class="button button-royal button-giant"><font style="color:black;">分享音乐&nbsp;&nbsp;&nbsp;&nbsp;分享心情<font></a>
+    </div>
+    <div class="col-sm-4">
+    </div>
+</body>
+</html>
